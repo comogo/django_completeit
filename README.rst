@@ -4,7 +4,7 @@ Installation
 Clone the repository then execute::
     python setup.py install
 
-Add *'compleit'* to your INSTALLED_APPS in settings.py::
+Add *'completeit'* to your INSTALLED_APPS in settings.py::
     INSTALLED_APPS = {
       ...
       'completeit',
