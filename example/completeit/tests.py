@@ -10,31 +10,64 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
 
+from completeit.serializer import completeit_serializer
 
-class AutocompleteTeste(TestCase):
+class CompleteitTest(TestCase):
     def setUp(self):
         self.client = Client()
         User.objects.create(username='test1', email='test1@test.com')
         User.objects.create(username='test2', email='test2@test.com')
         User.objects.create(username='user1',  email='user1@test.com')
-        
-    def test_autocomplete_key_fail(self):
+
+    def test_completeit_pass(self):
         """
-        Try autocomplete field not allowed.
+        Test usually use without specifying the format..
+        """
+        response = self.client.get('/completeit/?k=u1&q=test')
+        self.assertEquals(response.content, "{results: [{id:1, value:'test1'}, {id:2, value:'test2'}]}")
+            
+    def test_completeit_json_pass(self):
+        """
+        Testing usually use the JSON format.
+        """
+        response = self.client.get('/completeit/?k=u1&q=test&f=json')
+        self.assertEquals(response.content, "{results: [{id:1, value:'test1'}, {id:2, value:'test2'}]}")
+        
+    def test_completeit_xml_pass(self):
+        """
+        Testing usually use the XML format.
+        """
+        response = self.client.get('/completeit/?k=u1&q=test&f=xml')
+        self.assertEquals(response.content, "<results><item><id>1</id><value>test1</value></item><item><id>2</id><value>test2</value></item></results>")
+
+    def test_completeit_key_fail(self):
+        """
+        Testing autocomplete for a key not defined in ALLOW_AUTOCOMPLETE settings.
         """
         response = self.client.get('/completeit/?k=u2&q=test')
         self.assertEqual(response.content, '{results: []}')
+    
+    def test_completeit_key_fail_xml(self):
+        """
+        Testing autocomplete for a key not defined in ALLOW_AUTOCOMPLETE settings specifying XML format.
+        """
+        response = self.client.get('/completeit/?k=u2&q=test&f=xml')
+        self.assertEqual(response.content, '<results></results>')
 
-    def test_autocomplete_pass(self):
+    def test_completeit_query_fail(self):
         """
-        Pass the test.
+        Testing autocomplete without query.
         """
-        response = self.client.get('/completeit/?k=u1&q=test')
-        self.assertEquals(response.content, "{results: ['test1', 'test2']}")
-        
-    def test_autocomplete_xml(self):
+        response = self.client.get('/completeit/?k=u1')
+        self.assertEqual(response.content, '{results: []}')
+
+    def test_completeit_key_query_fail(self):
         """
-        Teste xml response.
+        Testing autocomplete for a key not defined in ALLOW_AUTOCOMPLETE settings without query.
         """
-        response = self.client.get('/completeit/?k=u1&q=test&f=xml')
-        self.assertEquals(response.content, "<results><item>test1</item><item>test2</item></results>")
+        response = self.client.get('/completeit/?k=u2')
+        self.assertEqual(response.content, '{results: []}')
+
+__test__ = {
+    'completeit_serializer': completeit_serializer,
+}

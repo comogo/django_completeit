@@ -62,8 +62,8 @@ def completeit(request):
                     lookup |= Q(**{l: query})
                     
             field = completeit_key.get('return')
-            qs = model.objects.filter(lookup).values(field)
-            data = [ d.get(field) for d in qs ]
+            qs = model.objects.filter(lookup).values('pk', field)
+            data = [ {'id': d.get('pk'), 'value': d.get(field)} for d in qs ]
     
     serialized_data = completeit_serializer(format, data)
     return HttpResponse(serialized_data, mimetype='application/%s' % format)
