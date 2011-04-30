@@ -11,6 +11,6 @@ class CompleteitWidget(forms.TextInput):
     def __init__(self, completeit_key, *args, **kwargs):
         super(CompleteitWidget, self).__init__(*args, **kwargs)
         self.attr['class'] += ' completeit'
-        if not completeit_key or not ALLOW_AUTOCOMPLETE.has_key(complete_key):
+        if not completeit_key or not ALLOW_AUTOCOMPLETE.has_key(completeit_key):
             raise ValueError('completeit_key is required but not used.')
         self.attr['completeit_key'] = completeit_key
