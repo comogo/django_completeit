@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{ form.media }}
+    <title>django_completeit example.</title>
+  </head>  
+  <body>
+    <form method="post", action="">
+      <table>
+        {{ form.as_table }}
+      </table>
+      <input type="submit" name="Send" value="Send">
+    </form>
+  </body>
+</html>

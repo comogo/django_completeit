@@ -6,14 +6,14 @@ ALLOW_AUTOCOMPLETE_TO = {
     'u1': {
         'model': 'auth.User',
         'lookup_fields': ('username__istartswith', 'first_name__istartswith',),
-        'return': 'username' # Field of model,
-        'format': 'json' # optional
+        'label': 'username' # Field of model,
+        'value': 'username',
     },
     'f1': {
         'model': 'flatpages.FlatPage',
         'lookup_fields': ('title__icontains',),
-        'return': 'title',
-        'format': 'json' # optional
+        'label': 'title',
+        'value': 'title'
     }
 }
 """
@@ -61,9 +61,13 @@ def completeit(request):
                 else:
                     lookup |= Q(**{l: query})
                     
-            field = completeit_key.get('return')
-            qs = model.objects.filter(lookup).values('pk', field)
-            data = [ {'id': d.get('pk'), 'value': d.get(field)} for d in qs ]
+            label = completeit_key.get('label')
+            value = completeit_key.get('value')
+            if label == value:
+                qs = model.objects.filter(lookup).values(label)
+            else:
+                qs = model.objects.filter(lookup).values(label, value)
+            data = [ {'label': d.get(label), 'value': d.get(value)} for d in qs ]
     
     serialized_data = completeit_serializer(format, data)
     return HttpResponse(serialized_data, mimetype='application/%s' % format)

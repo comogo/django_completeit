@@ -8,9 +8,21 @@ class CompleteitWidget(forms.TextInput):
     """
     Widget used by CompleteitField.
     """
+    class Media:
+        js = (
+            settings.MEDIA_URL + 'completeit/js/jquery.js',
+            settings.MEDIA_URL + 'completeit/js/jquery-ui.js',
+            settings.MEDIA_URL + 'completeit/js/completeit.js',
+        )
+        
+        css = {
+            'all': (
+                settings.MEDIA_URL + 'completeit/css/jquery-ui.css',
+            )
+        }
     def __init__(self, completeit_key, *args, **kwargs):
         super(CompleteitWidget, self).__init__(*args, **kwargs)
-        self.attr['class'] += ' completeit'
+        self.attrs['class'] = ' completeit'
         if not completeit_key or not ALLOW_AUTOCOMPLETE.has_key(completeit_key):
             raise ValueError('completeit_key is required but not used.')
-        self.attr['completeit_key'] = completeit_key
+        self.attrs['completeit_key'] = completeit_key
