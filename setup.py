@@ -24,7 +24,7 @@ setup(
     author='Mateus Lorandi dos Santos',
     author_email='mcomogo@gmail.com',
     license='MIT',
-    packages=find_packages(),
+    packages=find_packages(exclude=['example']),
     include_package_data=True,
     zip_safe=False,
 )
