@@ -6,6 +6,17 @@ Django ajax autocomplete generic app.
 Installation
 ------------
 
+Installation steps:
+
+    $ git clone git://github.com/comogo/django_completeit.git
+    $ cd django_completeit
+    $ pyhon setup.py install
+    
+    done ;)
+
+Configuration
+------------
+
 Add the 'completeit' directory somewhere on your 'PYTHONPATH', put it into 'INSTALLED_APPS' in your settings file.
 Fill in your ALLOW_AUTOCOMPLETE in your settings file, like this:
 
