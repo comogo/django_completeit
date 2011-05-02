@@ -28,3 +28,37 @@ Add the bellow settings to your URLconf:
 Copy the content of completeit media folder or create a symlink to your media:
 
     ln -s /path/to/your/completeit/media/completeit /path/to/your/media/
+
+Usage
+-----
+
+Use the CompleteitWidget in your form fields that you want.
+You have to tell CompleteWidget completeit_key which should be used for the autocomplete.
+
+Example:
+
+*forms.py*:
+
+    from django import forms
+    
+    from completeit.forms import CompleteitWidget
+
+    class TestForm(forms.Form):
+        username = forms.CharField(widget=CompleteitWidget(completeit_key='u1'))
+
+*template.html*:
+
+    <html>
+      <head>
+        {{ form.media }}
+        <title>django_completeit example.</title>
+      </head>  
+      <body>
+        <form method="post", action="">
+          <table>
+            {{ form.as_table }}
+          </table>
+          <input type="submit" value="Send">
+        </form>
+      </body>
+    </html>
