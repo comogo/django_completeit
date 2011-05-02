@@ -90,7 +90,7 @@ TEMPLATE_DIRS = (
 ALLOW_AUTOCOMPLETE = {
     'u1': {
         'model': 'auth.User',
-        'lookup_fields': ('username__istartswith', ),
+        'search': ('username__istartswith', ),
         'label': 'username',
         'value': 'username'
     }

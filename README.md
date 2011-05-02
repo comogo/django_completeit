@@ -22,7 +22,7 @@ Add the bellow settings to your URLconf:
 
     urlpatterns = patterns('',
         ...
-        (r'^completeit/', 'completeit.views.completeit'),
+        (r'^completeit/', include('completeit.urls')),
     )
 
 Copy the content of completeit media folder or create a symlink to your media:
