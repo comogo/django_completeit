@@ -25,7 +25,8 @@ setup(
     author_email='mcomogo@gmail.com',
     license='MIT',
     packages=['completeit'],
+    url='http://github.com/comogo/django_completeit',
     include_package_data=True,
-    exclude_package_fata={'': ['example']},
+    exclude_package_data={'': ['example']},
     zip_safe=False,
 )
