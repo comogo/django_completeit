@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
  
 version = '0.0.1'
  
@@ -24,7 +24,8 @@ setup(
     author='Mateus Lorandi dos Santos',
     author_email='mcomogo@gmail.com',
     license='MIT',
-    packages=find_packages(exclude=['example']),
+    packages=['completeit'],
     include_package_data=True,
+    exclude_package_fata={'': ['example']},
     zip_safe=False,
 )
